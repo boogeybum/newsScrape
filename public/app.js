@@ -1,3 +1,7 @@
+//===================================================================================
+// FOR TEST AND REFERENCE PURPOSES ONLY. DELETE AFTER SUCCESSFUL TEST WITH HANDLEBARS
+//===================================================================================
+
 // Grab the articles as a json
 $.getJSON("/articles", function(data) {
   // For each one

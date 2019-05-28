@@ -36,6 +36,10 @@ mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true 
 // app.use(routes);
 //=====================================================
 
+
+//===================================================================================
+// FOR TEST AND REFERENCE PURPOSES ONLY. DELETE AFTER SUCCESSFUL TEST WITH HANDLEBARS
+//===================================================================================
 // Routes
 
 // A GET route for scraping the echoJS website
@@ -125,8 +129,8 @@ app.post("/articles/:id", function(req, res) {
     });
 });
 
-
-//=====================================================
+//========================================================================================================
+//========================================================================================================
 
 // Start our server so that it can begin listening to client requests.
 app.listen(PORT, function() {
