@@ -1,26 +1,37 @@
 var express = require("express");
-var axios = require("axios");
+var logger = require("morgan");
 
+var axios = require("axios");
+var cheerio = require("cheerio");
 var router = express.Router();
 
 // Require all models
-var db = require("./models");
+var db = require("../models");
+
+var app = express();
+// Use morgan logger for logging requests
+app.use(logger("dev"));
+// Parse application body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://www.newschannel5.com/").then(function(response) {
+  axios.get("https://www.newschannel5.com").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("a h3").each(function(i, element) {
+    $(".showcase-big-row").each(function(i, element) {
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
-        .children("h3")
+        .children("a").children(".ShowcasePromo").children(".ShowcasePromo-info").children("h3")
         .text();
       result.link = $(this)
         .children("a")
