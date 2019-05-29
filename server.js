@@ -45,15 +45,15 @@ mongoose.connect("mongodb://localhost/newsScraper", { useNewUrlParser: true });
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://www.newschannel5.com/").then(function(response) {
+  axios.get("https://www.newschannel5.com").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("div h3").each(function(i, element) {
+    $(".showcase-big-row").each(function(i, element) {
       // Save an empty result object
       var result = {};
-      console.log(result);
+
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
         .children("h3")
@@ -62,6 +62,7 @@ app.get("/scrape", function(req, res) {
         .children("a")
         .attr("href");
 
+      console.log(result);
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
