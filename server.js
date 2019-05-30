@@ -28,7 +28,11 @@ app.use(express.static("public"));
 
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/newsScraper", { useNewUrlParser: true });
+var MONGODB_URI =process.env.MONGODB_URI || "mongodb://localhost/newsScraper";
+mongoose.connect(MONGODB_URI);
+// Delete old working connection below in event new MONGODB_URI has issues that need troubleshooting
+// mongoose.connect("mongodb://localhost/newsScraper", { useNewUrlParser: true });
+
 //=====================================================
 // Import routes and give the server access to them.
 // var routes = require("./controllers/newsController.js");
